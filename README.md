@@ -7,7 +7,7 @@ pip install git+git://github.com/lawrencefoley/kcpl.git
 ```
 
 ## Usage
-```
+```python
 # Import the package
 from kcpl import KCPL
 kcpl = KCPL("username", "password")
