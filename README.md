@@ -9,7 +9,7 @@ pip install git+git://github.com/lawrencefoley/kcpl.git
 ## Usage
 ```python
 # Import the package
-from kcpl import KCPL
+from kcpl.kcpl import KCPL
 kcpl = KCPL("username", "password")
 kcpl.login()
 # Get a list of the meters for your account
