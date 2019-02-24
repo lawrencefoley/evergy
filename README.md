@@ -10,15 +10,17 @@ pip install git+git://github.com/lawrencefoley/kcpl.git
 ```python
 # Import the package
 from kcpl.kcpl import KCPL
+
+# Login
 kcpl = KCPL("username", "password")
 kcpl.login()
-# Get a list of the meters for your account
-meters = kcpl.getMeters()
-print("Meters: " + str(meters))
-print("Using first meter: " + str(meters[0]))
-# Get readings for a meter
-data = kcpl.getUsage(meters[0])
-print("Last meter reading: " + str(data[0]))
+
+# Get a list of daily readings
+# Note, there is more data available such as 'cost' and 'avgTemp'
+data = kcpl.getUsage()
+logging.info("Last usage reading: " + str(data[-1]))
+logging.info("Last usage reading: " + str(data[-1]["usage"]))
+
 # End your session by logging out
 kcpl.logout()
 ```
