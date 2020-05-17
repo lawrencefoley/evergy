@@ -1,5 +1,5 @@
-## Meter Data Utility for Kansas City Power and Light
-A simple utility that you can use to login to your KCPL account and retrieve you meter readings.
+## Meter Data Utility for Evergy (previously known as Kansas City Power and Light)
+A simple utility that you can use to login to your Evergy account and retrieve you meter readings.
 
 ## Install
 ```
