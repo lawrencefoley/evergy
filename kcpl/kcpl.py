@@ -27,7 +27,11 @@ class KCPL():
     def login(self):
         self.session = requests.Session()
         logging.info("Logging in with username: " + self.username)
-        loginPayload = {"username": str(self.username), "password": str(self.password)}
+        login_form = self.session.get(self.loginUrl)
+        login_form_soup = BeautifulSoup(login_form.text, 'html.parser')
+        csrf_token = login_form_soup.select(".login-form > input")[0]["value"]
+        csrf_token_name = login_form_soup.select(".login-form > input")[0]["name"]
+        loginPayload = {"Username": str(self.username), "Password": str(self.password), csrf_token_name: csrf_token}
         r = self.session.post(url=self.loginUrl, data=loginPayload, allow_redirects=False)
         logging.debug("Login response: " + str(r.status_code))
         r = self.session.get(self.accountSummaryUrl)
