@@ -12,12 +12,12 @@ with open(path.join(here, 'README.md'), encoding='utf-8') as f:
 
 setup(
     name='kcpl',
-    version='0.0.1',
+    version='0.0.2',
     description='A utility that reads electric utility meter data from KCPL.com',
     long_description=long_description,
     url='https://github.com/lawrencefoley/kcpl',
     author='Lawrence Foley',
-    author_email='emwav333@gmail.com',  # Optional
+    author_email='emwav333@gmail.com',
 
     # Classifiers help users find your project by categorizing it.
     #
@@ -39,14 +39,14 @@ setup(
 
         # Specify the Python versions you support here. In particular, ensure
         # that you indicate whether you support Python 2, Python 3 or both.
-        'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3.9',
     ],
 
     # This field adds keywords for your project which will appear on the
     # project page. What does your project relate to?
     #
     # Note that this is a string of words separated by whitespace, not a list.
-    keywords='kcpl api utilities kansas-city',  # Optional
+    keywords='kcpl evergy api utilities kansas-city',  # Optional
 
     # You can just specify package directories manually here if your project is
     # simple. Or you can use find_packages().
