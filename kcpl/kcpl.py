@@ -1,74 +1,97 @@
 import json
+import logging
+from datetime import date, timedelta
+
 import requests
 from bs4 import BeautifulSoup
-from datetime import date, timedelta
-import logging
 
-logging.basicConfig(format="%(asctime)s - %(levelname)s - %(name)s -  - %(message)s", level=logging.INFO)
+logging.basicConfig(
+    format="%(asctime)s - %(levelname)s - %(name)s -  - %(message)s", level=logging.INFO
+)
 
 day_before_yesterday = date.today() - timedelta(days=2)
 yesterday = date.today() - timedelta(days=1)
 today = date.today()
 
-class KCPL():
+
+class KCPL:
     def __init__(self, username, password):
-        self.loggedIn = False
+        self.logged_in = False
         self.session = None
         self.username = username
         self.password = password
-        self.accountNumber = None
-        self.premiseId = None
-        self.loginUrl = "https://www.evergy.com/log-in"
-        self.logoutUrl = "https://www.evergy.com/logout"
-        self.accountSummaryUrl = "https://www.evergy.com/ma/my-account/account-summary"
-        self.accountDashboardUrl = "https://www.evergy.com/api/account/{accountNum}/dashboard/current"
-        self.usageDataUrl = "https://www.evergy.com/api/report/usage/{premiseId}?interval={query_scale}&from={start}&to={end}"
+        self.account_number = None
+        self.premise_id = None
+        self.login_url = "https://www.evergy.com/log-in"
+        self.logout_url = "https://www.evergy.com/logout"
+        self.account_summary_url = (
+            "https://www.evergy.com/ma/my-account/account-summary"
+        )
+        self.account_dashboard_url = (
+            "https://www.evergy.com/api/account/{accountNum}/dashboard/current"
+        )
+        self.usageDataUrl = "https://www.evergy.com/api/report/usage/{premise_id}?interval={query_scale}&from={start}&to={end}"
 
     def login(self):
         self.session = requests.Session()
         logging.info("Logging in with username: " + self.username)
-        login_form = self.session.get(self.loginUrl)
-        login_form_soup = BeautifulSoup(login_form.text, 'html.parser')
+        login_form = self.session.get(self.login_url)
+        login_form_soup = BeautifulSoup(login_form.text, "html.parser")
         csrf_token = login_form_soup.select(".login-form > input")[0]["value"]
         csrf_token_name = login_form_soup.select(".login-form > input")[0]["name"]
-        loginPayload = {"Username": str(self.username), "Password": str(self.password), csrf_token_name: csrf_token}
-        r = self.session.post(url=self.loginUrl, data=loginPayload, allow_redirects=False)
+        login_payload = {
+            "Username": str(self.username),
+            "Password": str(self.password),
+            csrf_token_name: csrf_token,
+        }
+        r = self.session.post(
+            url=self.login_url, data=login_payload, allow_redirects=False
+        )
         logging.debug("Login response: " + str(r.status_code))
-        r = self.session.get(self.accountSummaryUrl)
-        soup = BeautifulSoup(r.text, 'html.parser')
-        accountData = soup.find_all('script', id='account-landing-data')
-        if len(accountData) == 0:
-            self.loggedIn = False
+        r = self.session.get(self.account_summary_url)
+        soup = BeautifulSoup(r.text, "html.parser")
+        account_data = soup.find_all("script", id="account-landing-data")
+        if len(account_data) == 0:
+            self.logged_in = False
         else:
-            self.accountNumber = json.loads(accountData[0].contents[0])["accountNumber"]
-            dashboardData = self.session.get(self.accountDashboardUrl.format(accountNum=self.accountNumber)).json()
-            self.premiseId = dashboardData["addresses"][0]["premiseId"]
-            self.loggedIn = self.accountNumber is not None and self.premiseId is not None
+            self.account_number = json.loads(account_data[0].contents[0])[
+                "accountNumber"
+            ]
+            dashboard_data = self.session.get(
+                self.account_dashboard_url.format(accountNum=self.account_number)
+            ).json()
+            self.premise_id = dashboard_data["addresses"][0]["premiseId"]
+            self.logged_in = (
+                self.account_number is not None and self.premise_id is not None
+            )
 
     def logout(self):
         logging.info("Logging out")
-        self.session.get(url=self.logoutUrl)
+        self.session.get(url=self.logout_url)
         self.session = None
-        self.loggedIn = False
+        self.logged_in = False
 
-
-    def getUsage(self, start=day_before_yesterday, end=yesterday, query_scale="d"):
+    def get_usage(self, start=day_before_yesterday, end=yesterday, query_scale="d"):
         """Fetches all usage data from the given period."""
-        if not self.loggedIn:
+        if not self.logged_in:
             logging.error("Must login first")
             return
-        url = self.usageDataUrl.format(premiseId=self.premiseId, query_scale=query_scale, start=start, end=end)
+        url = self.usageDataUrl.format(
+            premise_id=self.premise_id, query_scale=query_scale, start=start, end=end
+        )
         logging.debug("fetching {}".format(url))
-        usageData = self.session.get(url).json()
-        return usageData["data"]
+        usage_data = self.session.get(url).json()
+        return usage_data["data"]
 
-def getCreds():
-    with open("../credentials.json", 'r') as f:
+
+def get_creds():
+    with open("../credentials.json", "r") as f:
         return json.loads(f.read())
+
 
 if __name__ == "__main__":
     # Read the credentials.json file
-    creds = getCreds()
+    creds = get_creds()
     username = creds["username"]
     password = creds["password"]
 
@@ -76,8 +99,7 @@ if __name__ == "__main__":
     kcpl.login()
 
     # Get a list of daily readings
-
-    data = kcpl.getUsage()
+    data = kcpl.get_usage()
     logging.info("Last usage data: " + str(data[-1]))
     logging.info("Last usage reading: " + str(data[-1]["usage"]))
 
