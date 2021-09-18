@@ -4,7 +4,7 @@ from codecs import open
 from os import path
 
 from setuptools import find_packages, setup
-
+import evergy
 here = path.abspath(path.dirname(__file__))
 
 # Get the long description from the README file
@@ -13,7 +13,7 @@ with open(path.join(here, "README.md"), encoding="utf-8") as f:
 
 setup(
     name="evergy",
-    version="1.0.2",
+    version=evergy.__version__,
     description="A utility that reads electric utility meter data from Evergy.com",
     long_description=long_description,
     url="https://github.com/lawrencefoley/evergy",
