@@ -14,7 +14,7 @@ yesterday = date.today() - timedelta(days=1)
 today = date.today()
 
 
-class KCPL:
+class Evergy:
     def __init__(self, username, password):
         self.logged_in = False
         self.session = None
@@ -95,13 +95,13 @@ if __name__ == "__main__":
     username = creds["username"]
     password = creds["password"]
 
-    kcpl = KCPL(username, password)
-    kcpl.login()
+    evergy = Evergy(username, password)
+    evergy.login()
 
     # Get a list of daily readings
-    data = kcpl.get_usage()
+    data = evergy.get_usage()
     logging.info("Last usage data: " + str(data[-1]))
     logging.info("Last usage reading: " + str(data[-1]["usage"]))
 
     # End your session by logging out
-    kcpl.logout()
+    evergy.logout()

@@ -12,11 +12,11 @@ with open(path.join(here, "README.md"), encoding="utf-8") as f:
     long_description = f.read()
 
 setup(
-    name="kcpl",
+    name="evergy",
     version="0.0.2",
-    description="A utility that reads electric utility meter data from KCPL.com",
+    description="A utility that reads electric utility meter data from Evergy.com",
     long_description=long_description,
-    url="https://github.com/lawrencefoley/kcpl",
+    url="https://github.com/lawrencefoley/evergy",
     author="Lawrence Foley",
     author_email="emwav333@gmail.com",
     # Classifiers help users find your project by categorizing it.
@@ -42,7 +42,7 @@ setup(
     # project page. What does your project relate to?
     #
     # Note that this is a string of words separated by whitespace, not a list.
-    keywords="kcpl evergy api utilities kansas-city",  # Optional
+    keywords="evergy kcpl kansas-city electricity-consumption electricity-meter api",  # Optional
     # You can just specify package directories manually here if your project is
     # simple. Or you can use find_packages().
     #
