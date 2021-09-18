@@ -18,7 +18,7 @@ setup(
     long_description=long_description,
     url="https://github.com/lawrencefoley/evergy",
     author="Lawrence Foley",
-    author_email="emwav333@gmail.com",
+    author_email="lawrencefoley@gmail.com",
     # Classifiers help users find your project by categorizing it.
     #
     # For a list of valid classifiers, see
@@ -59,7 +59,7 @@ setup(
     #
     # For an analysis of "install_requires" vs pip's requirements files see:
     # https://packaging.python.org/en/latest/requirements.html
-    install_requires=["beautifulsoup4", "requests"],  # Optional
+    install_requires=["beautifulsoup4==4.7.1", "requests==2.21.0"],  # Optional
     # If there are data files included in your packages that need to be
     # installed, specify them here.
     #
