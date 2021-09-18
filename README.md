@@ -10,20 +10,20 @@ pip install git+git://github.com/lawrencefoley/evergy.git
 
 ```python
 # Import the package
-from kcpl.kcpl import KCPL
+from evergy.evergy import Evergy
 
 # Login
-kcpl = KCPL("username", "password")
-kcpl.login()
+evergy = Evergy("username", "password")
+evergy.login()
 
 # Get a list of daily readings
 # Note, there is more data available such as 'cost' and 'avgTemp'
-data = kcpl.get_usage()
+data = evergy.get_usage()
 logging.info("Last usage reading: " + str(data[-1]))
 logging.info("Last usage reading: " + str(data[-1]["usage"]))
 
 # End your session by logging out
-kcpl.logout()
+evergy.logout()
 ```
 
 ## Development
@@ -31,8 +31,8 @@ kcpl.logout()
 Install the dev dependencies and run `isort` and `flake8` to properly format the code.
 ```bash
 pip install -r requirements_dev.txt
-isort kcpl/
-flake8 kcpl/
+isort evergy/
+flake8 evergy/
 ```
 
 ### Release New Version
