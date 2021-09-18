@@ -1,16 +1,19 @@
-## Meter Data Utility for Evergy (previously known as Kansas City Power and Light)
+## ⚡Evergy Client
 A simple utility that you can use to login to your Evergy account and retrieve you meter readings.
+> **Note: This is an unofficial utility that uses Evergy's non-public API.**
+
+> Previously known as "KCPL"
 
 ## Install
 ```
-pip install git+git://github.com/lawrencefoley/evergy.git
+pip install --upgrade git+git://github.com/lawrencefoley/evergy.git
 ```
 
 ## Usage
 
 ```python
 # Import the package
-from evergy.evergy import Evergy
+from evergy import Evergy
 
 # Login
 evergy = Evergy("username", "password")
