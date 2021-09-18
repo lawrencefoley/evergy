@@ -18,7 +18,7 @@ setup(
     long_description=long_description,
     url="https://github.com/lawrencefoley/evergy",
     author="Lawrence Foley",
-    author_email="lawrencefoley@gmail.com",
+    author_email="lawrencefoley@live.com",
     # Classifiers help users find your project by categorizing it.
     #
     # For a list of valid classifiers, see
