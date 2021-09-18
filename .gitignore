@@ -49,3 +49,5 @@ crashlytics.properties
 crashlytics-build.properties
 fabric.properties
 /venv/
+/docs/_build/
+evergy/__pycache__/*

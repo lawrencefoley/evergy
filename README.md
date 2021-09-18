@@ -1,4 +1,4 @@
-## ⚡Evergy Client
+# ⚡Evergy Client
 A simple utility that you can use to login to your Evergy account and retrieve you meter readings.
 > **Note: This is an unofficial utility that uses Evergy's non-public API.**
 
@@ -43,4 +43,10 @@ flake8 evergy/
 git commit -m "Bump version"
 git tag -a v1.0.1 -m "v1.0.1"
 git push --tags
+```
+
+### Build Docs
+Windows PowerShell:
+```powershell
+.\make.bat clean; .\make.bat html
 ```
