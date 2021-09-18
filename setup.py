@@ -13,7 +13,7 @@ with open(path.join(here, "README.md"), encoding="utf-8") as f:
 
 setup(
     name="evergy",
-    version="0.0.2",
+    version="1.0.2",
     description="A utility that reads electric utility meter data from Evergy.com",
     long_description=long_description,
     url="https://github.com/lawrencefoley/evergy",
