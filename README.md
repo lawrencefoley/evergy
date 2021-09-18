@@ -3,7 +3,7 @@ A simple utility that you can use to login to your Evergy account and retrieve y
 
 ## Install
 ```
-pip install git+git://github.com/lawrencefoley/kcpl.git
+pip install git+git://github.com/lawrencefoley/evergy.git
 ```
 
 ## Usage
