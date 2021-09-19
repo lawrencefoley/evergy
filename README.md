@@ -52,6 +52,8 @@ Latest data:
     'isPartial': False
 }
 ```
+## Related Projects
+- [KC Water](https://github.com/patrickjmcd/kcwater): A similar project developed by [Patrick McDonagh](https://github.com/patrickjmcd). Check it out!
 
 ## Development
 ### Setup
