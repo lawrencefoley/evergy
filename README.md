@@ -6,11 +6,10 @@ A simple utility that you can use to login to your Evergy account and retrieve y
 
 ## Install
 ```
-pip install --upgrade git+git://github.com/lawrencefoley/evergy.git
+pip install evergy
 ```
 
 ## Usage
-
 ```python
 # Import the package
 from evergy import Evergy
