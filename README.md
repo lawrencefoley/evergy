@@ -18,21 +18,39 @@ pip install evergy
 
 ## Usage
 ```python
-# Import the package
 from evergy import Evergy
 
-# Login
-evergy = Evergy("username", "password")
+evergy = Evergy("<username>", "<password>")
 evergy.login()
 
-# Get a list of daily readings
-# Note, there is more data available such as 'cost' and 'avgTemp'
 data = evergy.get_usage()
-logging.info("Last usage reading: " + str(data[-1]))
-logging.info("Last usage reading: " + str(data[-1]["usage"]))
+print("Latest data: " + str(data[-1]))
 
-# End your session by logging out
 evergy.logout()
+```
+
+### Output
+The last element from the `get_usage()` will be the latest data. The `usage` is in kilowatt-hours. I believe the `peakDateTime` is the
+time during that day when your usage was the highest and the `peakDemand` is how many kilowatts you were drawing at that time.
+```json
+Latest data:
+{
+    'period': 'Saturday',
+    'billStart': '0001-01-01T00:00:00',
+    'billEnd': '0001-01-01T00:00:00',
+    'billDate': '2021-09-18T00:00:00',
+    'date': '9/18/2021',
+    'usage': 14.7756,
+    'demand': 3.7992,
+    'avgDemand': 0.0,
+    'peakDemand': 3.7992,
+    'peakDateTime': '12:45 p.m.',
+    'maxTemp': 71.0,
+    'minTemp': 71.0,
+    'avgTemp': 71.0,
+    'cost': 18.5748, 
+    'isPartial': False
+}
 ```
 
 ## Development
@@ -76,10 +94,10 @@ python -m build --no-isolation --wheel
 ### Upload to PyPi
 #### Test
 ```bash
-twine upload --verbose -u "username" -p "password" --repository testpypi dist/*
+twine upload --verbose --repository testpypi dist/*
 ```
 
 #### Prod
 ```bash
-twine upload --verbose -u "username" -p "password" --repository pypi dist/*
+twine upload --verbose --repository pypi dist/*
 ```
