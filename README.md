@@ -30,12 +30,26 @@ evergy.logout()
 ```
 
 ## Development
+### Setup
+```powershell
+python -m pip install --upgrade virtualenv
+virtualenv venv
+.\venv\Scripts\activate.ps1
+```
+
 ### Code Formatting
 Install the dev dependencies and run `isort` and `flake8` to properly format the code.
 ```bash
+
 pip install -r requirements_dev.txt
 isort evergy/
 flake8 evergy/
+```
+
+### Build Docs
+Windows PowerShell:
+```powershell
+.\make.bat clean; .\make.bat html
 ```
 
 ### Release New Version
@@ -45,8 +59,19 @@ git tag -a v1.0.1 -m "v1.0.1"
 git push --tags
 ```
 
-### Build Docs
-Windows PowerShell:
-```powershell
-.\make.bat clean; .\make.bat html
+### Build Wheel
+> The `--no-isolation` flag tells it to use the existing virtual env
+```bash
+python -m build --no-isolation --wheel
+```
+
+### Upload to PyPi
+#### Test
+```bash
+twine upload --verbose -u "username" -p "password" --repository testpypi dist/*
+```
+
+#### Prod
+```bash
+twine upload --verbose -u "username" -p "password" --repository pypi dist/*
 ```
