@@ -60,6 +60,7 @@ docs\make.bat clean; docs\make.bat html
 ```
 
 ### Release New Version
+- Bump `__version__` in `evergy/__init__.py` 
 ```bash
 git commit -m "Bump version"
 git tag -a v1.0.1 -m "v1.0.1"
