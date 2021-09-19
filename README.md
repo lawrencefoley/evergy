@@ -32,7 +32,7 @@ evergy.logout()
 ### Output
 The last element from the `get_usage()` will be the latest data. The `usage` is in kilowatt-hours. I believe the `peakDateTime` is the
 time during that day when your usage was the highest and the `peakDemand` is how many kilowatts you were drawing at that time.
-```json
+```text
 Latest data:
 {
     'period': 'Saturday',
