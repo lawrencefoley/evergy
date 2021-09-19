@@ -1,5 +1,12 @@
 # ⚡Evergy Client
+![https://pypi.org/project/evergy/](https://badge.fury.io/py/evergy.svg)
+![https://pypi.org/project/evergy/](https://img.shields.io/pypi/pyversions/evergy.svg)
+![https://evergy.readthedocs.io/en/latest/](https://readthedocs.org/projects/evergy/badge/?version=latest)
+![https://requires.io/github/lawrencefoley/evergy/requirements/?branch=master](https://requires.io/github/lawrencefoley/evergy/requirements.svg?branch=master)
+
 A simple utility that you can use to login to your Evergy account and retrieve you meter readings.
+- **[Documentation](https://evergy.readthedocs.io/en/latest/)**
+- **[Source Code](https://github.com/lawrencefoley/evergy)**
 > **Note: This is an unofficial utility that uses Evergy's non-public API.**
 
 > Previously known as "KCPL"
