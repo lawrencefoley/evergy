@@ -1,7 +1,4 @@
 isort==5.9.3
 flake8==3.9.2
-sphinx==4.2.0
-furo==2021.9.8
-myst-parser==0.15.2
 build==0.7.0
 twine==3.4.2

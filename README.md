@@ -49,7 +49,8 @@ flake8 evergy/
 ### Build Docs
 Windows PowerShell:
 ```powershell
-.\make.bat clean; .\make.bat html
+pip install -r docs/requirements_docs.txt
+docs\make.bat clean; docs\make.bat html
 ```
 
 ### Release New Version
