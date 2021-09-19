@@ -52,3 +52,9 @@ fabric.properties
 /docs/_build/
 evergy/__pycache__/*
 dist/*
+build/*
+evergy.egg-info/dependency_links.txt
+evergy.egg-info/PKG-INFO
+evergy.egg-info/requires.txt
+evergy.egg-info/SOURCES.txt
+evergy.egg-info/top_level.txt

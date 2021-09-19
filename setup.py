@@ -8,7 +8,7 @@ import evergy
 here = path.abspath(path.dirname(__file__))
 
 # Get the long description from the README file
-with open(path.join(here, "README.md"), encoding="utf-8") as f:
+with open(path.join(here, "README.md"), encoding="UTF-8") as f:
     long_description = f.read()
 
 setup(
@@ -16,7 +16,14 @@ setup(
     version=evergy.__version__,
     description="A utility that reads electric utility meter data from Evergy.com",
     long_description=long_description,
+    long_description_content_type='text/markdown',
     url="https://github.com/lawrencefoley/evergy",
+    project_urls={
+        'Documentation': 'https://evergy.readthedocs.io/en/latest/',
+        'Source': 'https://github.com/lawrencefoley/evergy/',
+        'Tracker': 'https://github.com/lawrencefoley/evergy/issues',
+        'Maintainer': 'https://lawrencefoley.com',
+    },
     author="Lawrence Foley",
     author_email="lawrencefoley@live.com",
     # Classifiers help users find your project by categorizing it.
@@ -28,7 +35,7 @@ setup(
         #   3 - Alpha
         #   4 - Beta
         #   5 - Production/Stable
-        "Development Status :: 3 - Alpha",
+        "Development Status :: 4 - Beta",
         # Indicate who your project is intended for
         "Intended Audience :: Developers",
         "Topic :: Utilities",
@@ -60,6 +67,7 @@ setup(
     # For an analysis of "install_requires" vs pip's requirements files see:
     # https://packaging.python.org/en/latest/requirements.html
     install_requires=["beautifulsoup4==4.7.1", "requests==2.21.0"],  # Optional
+    python_requires='>=3',
     # If there are data files included in your packages that need to be
     # installed, specify them here.
     #
@@ -67,5 +75,6 @@ setup(
     # MANIFEST.in as well.
     package_data={  # Optional
         "credentials": ["credentials.json"],
+        "README": ["README.md"],
     },
 )

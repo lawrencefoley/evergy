@@ -62,5 +62,16 @@ git push --tags
 ### Build Wheel
 > The `--no-isolation` flag tells it to use the existing virtual env
 ```bash
-python -m build --no-isolation
+python -m build --no-isolation --wheel
+```
+
+### Upload to PyPi
+#### Test
+```bash
+twine upload --verbose -u "username" -p "password" --repository testpypi dist/*
+```
+
+#### Prod
+```bash
+twine upload --verbose -u "username" -p "password" --repository pypi dist/*
 ```
