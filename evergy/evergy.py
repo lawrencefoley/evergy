@@ -1,13 +1,11 @@
 import json
 import logging
 from datetime import date
-from pprint import pprint
 from typing import Final
-
-from utils import get_past_date
 
 import requests
 from bs4 import BeautifulSoup
+from utils import get_past_date
 
 logging.basicConfig(
     format="%(asctime)s - %(levelname)s - %(name)s - %(message)s", level=logging.INFO
@@ -89,7 +87,8 @@ class Evergy:
         """
         return self.get_usage_range(get_past_date(days_back=days - 1), get_past_date(0), interval=interval)
 
-    def get_usage_range(self, start: date = get_past_date(0), end: date = get_past_date(0), interval: str = DAY_INTERVAL) -> [dict]:
+    def get_usage_range(self, start: date = get_past_date(0), end: date = get_past_date(0),
+                        interval: str = DAY_INTERVAL) -> [dict]:
         """
         Gets a specific range of historical usage. Could be useful for reporting.
         :param start: The date to begin getting data for (inclusive)

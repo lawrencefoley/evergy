@@ -66,7 +66,6 @@ virtualenv venv
 ### Code Formatting
 Install the dev dependencies and run `isort` and `flake8` to properly format the code.
 ```bash
-
 pip install -r requirements_dev.txt
 isort evergy/
 flake8 evergy/
