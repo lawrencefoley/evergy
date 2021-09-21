@@ -20,13 +20,10 @@ pip install evergy
 ```python
 from evergy import Evergy
 
-evergy = Evergy("<username>", "<password>")
-evergy.login()
+evergy = Evergy("<evergy-username>", "<evergy-password>")
 
 data = evergy.get_usage()
-print("Latest data: " + str(data[-1]))
-
-evergy.logout()
+print("Today's kWh: " + str(data[-1]["usage"]))
 ```
 
 ### Output
