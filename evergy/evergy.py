@@ -1,9 +1,10 @@
 import json
 import logging
 from datetime import date
+from pprint import pprint
 from typing import Final
 
-from .utils import get_past_date
+from utils import get_past_date
 
 import requests
 from bs4 import BeautifulSoup
@@ -86,7 +87,7 @@ class Evergy:
         :param interval: The time period between each data element in the returned data. Default is days.
         :return: A list of usage elements. The number of elements will depend on the `interval` argument.
         """
-        return self.get_usage_range(get_past_date(days_back=days), get_past_date(0), interval=interval)
+        return self.get_usage_range(get_past_date(days_back=days - 1), get_past_date(0), interval=interval)
 
     def get_usage_range(self, start: date = get_past_date(0), end: date = get_past_date(0), interval: str = DAY_INTERVAL) -> [dict]:
         """
@@ -98,6 +99,9 @@ class Evergy:
         """
         if not self.logged_in:
             self.login()
+        if start > end:
+            logging.error("'start' date can't be after 'end' date")
+            raise Exception("'start' date can't be after 'end' date")
         url = self.usageDataUrl.format(
             premise_id=self.premise_id, interval=interval, start=start, end=end
         )
