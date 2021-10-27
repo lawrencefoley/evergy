@@ -5,7 +5,7 @@ from typing import Final
 
 import requests
 from bs4 import BeautifulSoup
-from .utils import get_past_date
+from . import utils
 
 logging.basicConfig(
     format="%(asctime)s - %(levelname)s - %(name)s - %(message)s", level=logging.INFO
