@@ -5,7 +5,7 @@ from typing import Final
 
 import requests
 from bs4 import BeautifulSoup
-from utils import get_past_date
+import utils
 
 logging.basicConfig(
     format="%(asctime)s - %(levelname)s - %(name)s - %(message)s", level=logging.INFO
@@ -15,8 +15,8 @@ DAY_INTERVAL: Final = "d"
 HOUR_INTERVAL: Final = "h"
 FIFTEEN_MINUTE_INTERVAL: Final = "mi"
 
-day_before_yesterday = get_past_date(2)
-yesterday = get_past_date(1)
+day_before_yesterday = utils.get_past_date(2)
+yesterday = utils.get_past_date(1)
 today = date.today()
 
 
@@ -85,9 +85,9 @@ class Evergy:
         :param interval: The time period between each data element in the returned data. Default is days.
         :return: A list of usage elements. The number of elements will depend on the `interval` argument.
         """
-        return self.get_usage_range(get_past_date(days_back=days - 1), get_past_date(0), interval=interval)
+        return self.get_usage_range(utils.get_past_date(days_back=days - 1), utils.get_past_date(0), interval=interval)
 
-    def get_usage_range(self, start: date = get_past_date(0), end: date = get_past_date(0),
+    def get_usage_range(self, start: date = utils.get_past_date(0), end: date = utils.get_past_date(0),
                         interval: str = DAY_INTERVAL) -> [dict]:
         """
         Gets a specific range of historical usage. Could be useful for reporting.
@@ -107,10 +107,12 @@ class Evergy:
         logging.info("Fetching {}".format(url))
         usage_response = self.session.get(url)
         # A 403 is return if the user got logged out from inactivity
-        if usage_response.status_code == 403:
+        if self.logged_in and usage_response.status_code == 403:
             logging.info("Received HTTP 403, logging in again")
             self.login()
             usage_response = self.session.get(url)
+        if usage_response.status_code != 200:
+            raise Exception("Invalid login credentials")
         return usage_response.json()["data"]
 
 
