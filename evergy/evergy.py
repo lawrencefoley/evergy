@@ -1,16 +1,22 @@
 import json
 import logging
-from datetime import date, timedelta
+from datetime import date
+from typing import Final
 
 import requests
 from bs4 import BeautifulSoup
+from utils import get_past_date
 
 logging.basicConfig(
-    format="%(asctime)s - %(levelname)s - %(name)s -  - %(message)s", level=logging.INFO
+    format="%(asctime)s - %(levelname)s - %(name)s - %(message)s", level=logging.INFO
 )
 
-day_before_yesterday = date.today() - timedelta(days=2)
-yesterday = date.today() - timedelta(days=1)
+DAY_INTERVAL: Final = "d"
+HOUR_INTERVAL: Final = "h"
+FIFTEEN_MINUTE_INTERVAL: Final = "mi"
+
+day_before_yesterday = get_past_date(2)
+yesterday = get_past_date(1)
 today = date.today()
 
 
@@ -30,7 +36,7 @@ class Evergy:
         self.account_dashboard_url = (
             "https://www.evergy.com/api/account/{accountNum}/dashboard/current"
         )
-        self.usageDataUrl = "https://www.evergy.com/api/report/usage/{premise_id}?interval={query_scale}&from={start}&to={end}"
+        self.usageDataUrl = "https://www.evergy.com/api/report/usage/{premise_id}?interval={interval}&from={start}&to={end}"
 
     def login(self):
         self.session = requests.Session()
@@ -71,17 +77,41 @@ class Evergy:
         self.session = None
         self.logged_in = False
 
-    def get_usage(self, start=day_before_yesterday, end=yesterday, query_scale="d"):
-        """Fetches all usage data from the given period."""
+    def get_usage(self, days: int = 1, interval: str = DAY_INTERVAL) -> [dict]:
+        """
+        Gets the energy usage for previous days up until today. Useful for getting the most recent data.
+        :rtype: [dict]
+        :param days: The number of back to get data for.
+        :param interval: The time period between each data element in the returned data. Default is days.
+        :return: A list of usage elements. The number of elements will depend on the `interval` argument.
+        """
+        return self.get_usage_range(get_past_date(days_back=days - 1), get_past_date(0), interval=interval)
+
+    def get_usage_range(self, start: date = get_past_date(0), end: date = get_past_date(0),
+                        interval: str = DAY_INTERVAL) -> [dict]:
+        """
+        Gets a specific range of historical usage. Could be useful for reporting.
+        :param start: The date to begin getting data for (inclusive)
+        :param end: The last date to get data for (inclusive)
+        :param interval: The time period between each data element in the returned data. Default is days.
+        :return: A list of usage elements. The number of elements will depend on the `interval` argument.
+        """
         if not self.logged_in:
-            logging.error("Must login first")
-            return
+            self.login()
+        if start > end:
+            logging.error("'start' date can't be after 'end' date")
+            raise Exception("'start' date can't be after 'end' date")
         url = self.usageDataUrl.format(
-            premise_id=self.premise_id, query_scale=query_scale, start=start, end=end
+            premise_id=self.premise_id, interval=interval, start=start, end=end
         )
-        logging.debug("fetching {}".format(url))
-        usage_data = self.session.get(url).json()
-        return usage_data["data"]
+        logging.info("Fetching {}".format(url))
+        usage_response = self.session.get(url)
+        # A 403 is return if the user got logged out from inactivity
+        if usage_response.status_code == 403:
+            logging.info("Received HTTP 403, logging in again")
+            self.login()
+            usage_response = self.session.get(url)
+        return usage_response.json()["data"]
 
 
 def get_creds():
@@ -90,18 +120,11 @@ def get_creds():
 
 
 if __name__ == "__main__":
-    # Read the credentials.json file
     creds = get_creds()
     username = creds["username"]
     password = creds["password"]
 
     evergy = Evergy(username, password)
-    evergy.login()
 
-    # Get a list of daily readings
     data = evergy.get_usage()
-    logging.info("Last usage data: " + str(data[-1]))
-    logging.info("Last usage reading: " + str(data[-1]["usage"]))
-
-    # End your session by logging out
-    evergy.logout()
+    logging.info("Today's kWh: " + str(data[-1]["usage"]))

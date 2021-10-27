@@ -1,3 +1,4 @@
-__version__ = "1.1.1"
+__version__ = "2.0.0"
 
-from .evergy import Evergy
+from .evergy import (DAY_INTERVAL, FIFTEEN_MINUTE_INTERVAL, HOUR_INTERVAL,
+                     Evergy)
