@@ -5,7 +5,7 @@ from typing import Final
 
 import requests
 from bs4 import BeautifulSoup
-import utils
+from . import utils
 
 logging.basicConfig(
     format="%(asctime)s - %(levelname)s - %(name)s - %(message)s", level=logging.INFO
@@ -115,18 +115,3 @@ class Evergy:
             raise Exception("Invalid login credentials")
         return usage_response.json()["data"]
 
-
-def get_creds():
-    with open("../credentials.json", "r") as f:
-        return json.loads(f.read())
-
-
-if __name__ == "__main__":
-    creds = get_creds()
-    username = creds["username"]
-    password = creds["password"]
-
-    evergy = Evergy(username, password)
-
-    data = evergy.get_usage()
-    logging.info("Today's kWh: " + str(data[-1]["usage"]))
