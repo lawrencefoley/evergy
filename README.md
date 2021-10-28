@@ -18,7 +18,7 @@ pip install evergy
 
 ## Usage
 ```python
-from evergy import Evergy
+from evergy.evergy import Evergy
 
 evergy = Evergy("<evergy-username>", "<evergy-password>")
 
