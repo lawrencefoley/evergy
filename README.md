@@ -56,8 +56,7 @@ Latest data:
 ```
 
 ## Home Assistant Integration
-There isn't currently an Home Assistant integration that uses this library. Checkout [this thread to see how others have used it in Home Assistant](https://github.com/lawrencefoley/evergy/issues/8#issuecomment-902181182).
-If you want to use this in a HA integration, please do and I'll link it here!
+There is currently a Home Assistant integration that uses this library. Checkout [TheBradleySanders/Evergy](https://github.com/thebradleysanders/evergy_home_assistant).
 
 ## Related Projects
 - [KC Water](https://github.com/patrickjmcd/kcwater): A similar project developed by [Patrick McDonagh](https://github.com/patrickjmcd). Check it out!
