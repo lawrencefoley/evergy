@@ -31,7 +31,7 @@ class Evergy:
         self.login_url = "https://www.evergy.com/log-in"
         self.logout_url = "https://www.evergy.com/logout"
         self.account_summary_url = (
-            "https://www.evergy.com/ma/my-account/account-summary"
+            "https://www.evergy.com/sc-api/account/getaccountpremiseselector?isWidgetPage=false&hasNoSelector=false"
         )
         self.account_dashboard_url = (
             "https://www.evergy.com/api/account/{accountNum}/dashboard/current"
@@ -55,14 +55,11 @@ class Evergy:
         )
         logging.debug("Login response: " + str(r.status_code))
         r = self.session.get(self.account_summary_url)
-        soup = BeautifulSoup(r.text, "html.parser")
-        account_data = soup.find_all("script", id="account-landing-data")
+        account_data = r.json()
         if len(account_data) == 0:
             self.logged_in = False
         else:
-            self.account_number = json.loads(account_data[0].contents[0])[
-                "accountNumber"
-            ]
+            self.account_number = account_data[0]['accountNumber']
             dashboard_data = self.session.get(
                 self.account_dashboard_url.format(accountNum=self.account_number)
             ).json()
