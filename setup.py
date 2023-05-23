@@ -67,7 +67,7 @@ setup(
     #
     # For an analysis of "install_requires" vs pip's requirements files see:
     # https://packaging.python.org/en/latest/requirements.html
-    install_requires=["beautifulsoup4==4.10.0", "requests==2.26.0"],  # Optional
+    install_requires=["beautifulsoup4==4.10.0", "requests==2.31.0"],  # Optional
     python_requires='>=3',
     # If there are data files included in your packages that need to be
     # installed, specify them here.
